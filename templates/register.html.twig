@@ -1,0 +1,16 @@
+{# templates/register.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% for message in app.flashes('fail') %}
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
+{% endfor %}
+    <h2>Inscription</h2>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+{% endblock %}
