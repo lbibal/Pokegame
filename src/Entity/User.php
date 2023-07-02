@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -34,6 +36,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $email = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $piece = null;
+
+    #[ORM\OneToMany(mappedBy: 'idUser', targetEntity: PokemonUser::class)]
+    private Collection $pokemonUsers;
+
+    public function __construct()
+    {
+        $this->pokemonUsers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -125,6 +138,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPiece(): ?int
+    {
+        return $this->piece;
+    }
+
+    public function setPiece(?int $piece): static
+    {
+        $this->piece = $piece;
+
+        return $this;
+    }
+
+
+    /**
+     * @return Collection<int, PokemonUser>
+     */
+    public function getPokemonUsers(): Collection
+    {
+        return $this->pokemonUsers;
+    }
+
+    public function addPokemonUser(PokemonUser $pokemonUser): static
+    {
+        if (!$this->pokemonUsers->contains($pokemonUser)) {
+            $this->pokemonUsers->add($pokemonUser);
+            $pokemonUser->setIdUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePokemonUser(PokemonUser $pokemonUser): static
+    {
+        if ($this->pokemonUsers->removeElement($pokemonUser)) {
+            // set the owning side to null (unless already changed)
+            if ($pokemonUser->getIdUser() === $this) {
+                $pokemonUser->setIdUser(null);
+            }
+        }
 
         return $this;
     }

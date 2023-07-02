@@ -30,7 +30,7 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setRoles(["ROLES_USER"]);
-
+            $user->setPiece(0);
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email

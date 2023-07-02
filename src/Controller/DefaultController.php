@@ -25,15 +25,20 @@ class DefaultController extends AbstractController
     #[Route('/', name: 'app_default')]
     public function index(): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_accueil');
+         }
         return $this->render('header.html.twig', [
             'controller_name' => 'DefaultController',
         ]);
     }
 
-    #[Route('/about',name: 'about_accueil')]
-    public function about(): Response 
+    #[Route('/accueil',name: 'app_accueil')]
+    public function accueil(): Response 
     {
-        return $this->render('default/about.html.twig');
+        return $this->render('default/accueil.html.twig', [
+            'user' => $this->getUser(),
+        ]);
     }
 
     //method get and post
