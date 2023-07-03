@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}listPokemon{% endblock %}
+
+{% block body %}
+{% include 'header.html.twig' %}
+<div class="card" style="width: 80%;margin: auto;margin-top:5%;">
+<div class="card-body">
+<h1>Liste des Pokemons</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Evolution</th>
+                <th>Starter</th>
+                <th>TypeCourbeNiveau</th>
+                <th>Xp gagnés</th>
+                <th>Barre Xp Max</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pokemon_type in pokemonsUser %}
+            <tr>
+                <td>{{ pokemon_type.id }}</td>
+                <td>{{ pokemon_type.idPokemon.nom }}</td>
+                <td>{{ pokemon_type.idPokemon.evolution ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemon_type.idPokemon.starter ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemon_type.idPokemon.typeCourbeNiveau }}</td>
+                <td>{{ pokemon_type.xpGain }}</td>
+                <td>{{ pokemon_type.xpMax  }}</td>
+                <td><a href="{{ path('app_PokemonInfo', {'id': pokemon_type.idPokemon.id}) }}">show</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+{% endblock %}

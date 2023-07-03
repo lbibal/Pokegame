@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block title %}listPokemon{% endblock %}
+
+{% block body %}
+{% include 'header.html.twig' %}
+<div class="card" style="width: 80%;margin: auto;margin-top:5%;">
+<div class="card-body">
+    <h1>Fiche général du pokemon</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pokemon.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ pokemon.nom }}</td>
+            </tr>
+            <tr>
+                <th>Evolution</th>
+                <td>{{ pokemon.evolution ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Starter</th>
+                <td>{{ pokemon.starter ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>TypeCourbeNiveau</th>
+                <td>{{ pokemon.typeCourbeNiveau }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_listPokemon') }}">retour à la liste</a>
+</div>
+    </div>
+{% endblock %}
