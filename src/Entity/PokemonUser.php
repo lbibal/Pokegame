@@ -14,8 +14,8 @@ class PokemonUser
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $LastTrainingTime = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $LastTrainingTime = null;
 
     #[ORM\Column(nullable: true)]
     private ?float $xpGain = null;
@@ -37,12 +37,12 @@ class PokemonUser
         return $this->id;
     }
 
-    public function getLastTrainingTime(): ?\DateTimeInterface
+    public function getLastTrainingTime(): ?string
     {
         return $this->LastTrainingTime;
     }
 
-    public function setLastTrainingTime(?\DateTimeInterface $LastTrainingTime): static
+    public function setLastTrainingTime(?string $LastTrainingTime): self
     {
         $this->LastTrainingTime = $LastTrainingTime;
 

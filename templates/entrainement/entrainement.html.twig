@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}listPokemon{% endblock %}
+
+{% block body %}
+{% include 'header.html.twig' %}
+<div class="card" style="width: 80%;margin: auto;margin-top:5%;">
+<div class="card-body">
+<h1>Liste des Pokemons à entrainer !</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Evolution</th>
+                <th>Starter</th>
+                <th>TypeCourbeNiveau</th>
+                <th>Niveau</th>
+                <th>Xp gagnés</th>
+                <th>Barre Xp Max</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in range(0, pokemonsUser|length - 1) %}
+            <tr>
+                <td>{{ pokemonsUser[i].id }}</td>
+                <td>{{ pokemonsUser[i].idPokemon.nom }}</td>
+                <td>{{ pokemonsUser[i].idPokemon.evolution ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemonsUser[i].idPokemon.starter ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemonsUser[i].idPokemon.typeCourbeNiveau }}</td>
+                <td>{{ pokemonsUser[i].Niveau }}</td>
+                <td>{{ pokemonsUser[i].xpGain }}</td>
+                <td>{{ pokemonsUser[i].xpMax  }}</td>
+                <td>
+                {% if isTraining[i] %}
+                <a href="{{ path('app_PokemonInfo', {'id': pokemonsUser[i].idPokemon.id}) }}">show</a>
+                {% else %}
+                <span> Indisponible </span>
+                
+                {% endif %}
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+{% endblock %}

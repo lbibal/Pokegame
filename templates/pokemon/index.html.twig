@@ -16,6 +16,7 @@
                 <th>Evolution</th>
                 <th>Starter</th>
                 <th>TypeCourbeNiveau</th>
+                <th>Niveau</th>
                 <th>Xp gagnés</th>
                 <th>Barre Xp Max</th>
                 <th>actions</th>
@@ -29,6 +30,7 @@
                 <td>{{ pokemon_type.idPokemon.evolution ? 'Yes' : 'No' }}</td>
                 <td>{{ pokemon_type.idPokemon.starter ? 'Yes' : 'No' }}</td>
                 <td>{{ pokemon_type.idPokemon.typeCourbeNiveau }}</td>
+                <td>{{ pokemon_type.Niveau }}</td>
                 <td>{{ pokemon_type.xpGain }}</td>
                 <td>{{ pokemon_type.xpMax  }}</td>
                 <td><a href="{{ path('app_PokemonInfo', {'id': pokemon_type.idPokemon.id}) }}">show</a></td>

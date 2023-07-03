@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\PokemonUser;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -16,6 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PokemonUserRepository extends ServiceEntityRepository
 {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, PokemonUser::class);
@@ -39,6 +41,38 @@ class PokemonUserRepository extends ServiceEntityRepository
         }
     }
 
+    public function getNbEvo(int $idUser): int
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        $queryBuilder->select('COUNT(p.id) AS evolutionCount')
+            ->from('App\Entity\Pokemon', 'p')
+            ->innerJoin('p.pokemonUsers', 'po')
+            ->where('po.idUser = :trainerId')
+            ->andWhere('p.evolution = :const')
+            ->setParameter('trainerId', $idUser)
+            ->setParameter('const',1);
+        $query = $queryBuilder->getQuery();
+        $result = $query->getSingleScalarResult();
+
+        return (int) $result;
+    }
+    public function getNbStarter($idUser) : int
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        $queryBuilder->select('COUNT(p.id) AS starterCount')
+            ->from('App\Entity\Pokemon', 'p')
+            ->innerJoin('p.pokemonUsers', 'po')
+            ->where('po.idUser = :trainerId')
+            ->andWhere('p.starter = :const')
+            ->setParameter('trainerId', $idUser)
+            ->setParameter('const',1);
+        $query = $queryBuilder->getQuery();
+        $result = $query->getSingleScalarResult();
+
+        return (int) $result;
+    }
 //    /**
 //     * @return PokemonUser[] Returns an array of PokemonUser objects
 //     */
