@@ -6,6 +6,7 @@ use App\Entity\Elementary;
 use App\Entity\Pokemon;
 use App\Entity\PokemonUser;
 use App\Entity\User;
+use App\Service\courbeNiveau\CourbeXpImpl;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -90,10 +91,11 @@ class PokemonFixtures extends Fixture
         
         //pokemon by default
         $pokemonUser = new PokemonUser();
+        //$courbeXpMax = new CourbeXpInterface();
         $pokemonUser->setIdUser($user);
         $pokemonUser->setIdPokemon($pokemonStarter);
         $pokemonUser->setXpGain(0);
-        $pokemonUser->setXpMax(0);
+        $pokemonUser->setXpMax(CourbeXpImpl::getXpMax($pokemonStarter->getTypeCourbeNiveau(), 1));
         $pokemonUser->setNiveau(1);
         $manager->persist($pokemonUser);
         

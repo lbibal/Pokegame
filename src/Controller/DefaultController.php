@@ -18,24 +18,26 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Email;
-
+use App\Service\courbeNiveau\CourbeXpImpl;
 
 class DefaultController extends AbstractController
 {
+
     #[Route('/', name: 'app_default')]
     public function index(): Response
     {
         if ($this->getUser()) {
             return $this->redirectToRoute('app_accueil');
-         }
-        return $this->render('header.html.twig', [
+        }
+        return $this->render('presentation.html.twig', [
             'controller_name' => 'DefaultController',
         ]);
     }
 
     #[Route('/accueil',name: 'app_accueil')]
     public function accueil(): Response 
-    {
+    {   
+        dd(CourbeXpImpl::getXpMax('R', 2));
         return $this->render('default/accueil.html.twig', [
             'user' => $this->getUser(),
         ]);
