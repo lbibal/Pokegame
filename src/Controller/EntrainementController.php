@@ -82,7 +82,8 @@ class EntrainementController extends AbstractController
         //search pokemon letter
         $pokemonCourbeLetter = $pokemonRepository->findBy(['id'=>$pokemonUser->getIdPokemon()])[0]
                                                  ->getTypeCourbeNiveau();
-           
+        //current level
+        $pokemonLevelFromBefore = $pokemonUser->getNiveau();
         //mark lastTrainingTime
         date_default_timezone_set('Europe/Paris');
         $currentTime = new \DateTime();  
@@ -106,9 +107,14 @@ class EntrainementController extends AbstractController
   
         $entityManager->persist($pokemonUser);
         $entityManager->flush();
-        //CourbeXpImpl::getXpMax(L)
         
-        
+        //add flash to be noticed
+        $this->addFlash('success', 'Votre pokémon a gagné un total de '.$xp.' XP');
+        //if pokemon gain a level notice it ! 
+        $diffLevel = abs($pokemonUser->getNiveau()-$pokemonLevelFromBefore);
+        if($diffLevel!=0){
+            $this->addFlash('success', 'Votre pokémon a gagné '.$diffLevel.' niveau(x) ! Barre d\'XP mise à jour !');
+        }
         return $this->redirectToRoute('app_fichePokemons',['id'=>$pokemonUser->getId()]);
         
     }

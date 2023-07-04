@@ -7,7 +7,6 @@
 <div class="card" style="width: 80%;margin: auto;margin-top:5%;">
 <div class="card-body">
 <h1>Liste des Pokemons à entrainer !</h1>
-
     <table class="table">
         <thead>
             <tr>
@@ -19,7 +18,7 @@
                 <th>Niveau</th>
                 <th>Xp gagnés</th>
                 <th>Barre Xp Max</th>
-                <th>Action</th>
+                <th>Prochain<br>entrainement</th>
             </tr>
         </thead>
         <tbody>
@@ -35,9 +34,10 @@
                 <td>{{ pokemonsUser[i].xpMax  }}</td>
                 <td>
                 {% if isTraining[i] %}
-                <a href="{{ path('app_fichePokemons', {'id': pokemonsUser[i].id}) }}">show</a>
+                <a href="{{ path('app_fichePokemons', {'id': pokemonsUser[i].id}) }}">now</a>
                 {% else %}
-                <span> indisponible </span>
+                
+                <span> {{ pokemonsUser[i].LastTrainingTime|slice(11)}} </span>
                 
                 {% endif %}
                 </td>
