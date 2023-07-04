@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Form\RegisterType;
-use App\Form\LoginType;
 use App\Entity\User;
 use App\Repository\PokemonUserRepository;
 use App\Repository\UserRepository;
@@ -38,7 +36,6 @@ class DefaultController extends AbstractController
     #[Route('/accueil',name: 'app_accueil')]
     public function accueil(PokemonUserRepository $pokemonUserRepository): Response 
     {   
-    
         $nbPoke = count($pokemonUserRepository->findBy(['idUser'=>$this->getUser()->getId()]));
         $nbEvo = $pokemonUserRepository->getNbEvo($this->getUser()->getId());
         $nbStarter = $pokemonUserRepository->getNbStarter($this->getUser()->getId()); 

@@ -19,7 +19,7 @@
                 <th>Niveau</th>
                 <th>Xp gagnés</th>
                 <th>Barre Xp Max</th>
-                <th>actions</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -35,12 +35,11 @@
                 <td>{{ pokemonsUser[i].xpMax  }}</td>
                 <td>
                 {% if isTraining[i] %}
-                <a href="{{ path('app_PokemonInfo', {'id': pokemonsUser[i].idPokemon.id}) }}">show</a>
+                <a href="{{ path('app_fichePokemons', {'id': pokemonsUser[i].id}) }}">show</a>
                 {% else %}
-                <span> Indisponible </span>
+                <span> indisponible </span>
                 
                 {% endif %}
-
                 </td>
             </tr>
         {% else %}

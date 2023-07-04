@@ -41,6 +41,19 @@ class PokemonUserRepository extends ServiceEntityRepository
         }
     }
 
+    public function getListIdPokemon(int $idUser)
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        $queryBuilder->select('distinct p.id AS idPokemon')
+            ->from('App\Entity\Pokemon', 'p')
+            ->innerJoin('p.pokemonUsers', 'po')
+            ->where('po.idUser = :trainerId')
+            ->setParameter('trainerId', $idUser);
+        $query = $queryBuilder->getQuery();
+        $result = $query->getScalarResult();
+
+        return $result;
+    }
     public function getNbEvo(int $idUser): int
     {
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();

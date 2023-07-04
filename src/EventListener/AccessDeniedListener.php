@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 use Twig\Environment;
 class AccessDeniedListener implements EventSubscriberInterface
 {
@@ -28,7 +30,7 @@ class AccessDeniedListener implements EventSubscriberInterface
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        if (!$exception instanceof AccessDeniedException) {
+        if (!$exception instanceof AccessDeniedException && !$exception instanceof NotFoundHttpException) {
             return;
         }
         // ... perform some action (e.g. logging)

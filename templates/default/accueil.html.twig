@@ -1,10 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %} Accueil {% endblock %}
 
 {% block body %}
 {% include 'header.html.twig' %}
-<hr>
+<div class="card" style="width: 80%;margin: auto;margin-top:5%;">
+<div class="card-body">
+        <h5 class="card-title">Bienvenue sur ton Pokedex Dresseur {{ user.pseudo}} !</h5>
+        <br>
+        <h4 class="card-title"><span class="badge badge-pill badge-primary">{{ nbPokemon }}</span> Pokemon dans ton Pokedex. Ajoutes-en vite de nouveaux !</h4>
 
-<h2>Bonjour ! dresseur {{ user.pseudo }}</h2>
+        <h4 class="card-title"><span class="badge badge-pill badge-primary">{{ nbStarter }}</span> base(s)</h4>
+
+        <h4 class="card-title"><span class="badge badge-pill badge-primary">{{ nbEvo }}</span> évolution(s)</h4>
+
+ </div>
+    </div>
 {% endblock %}

@@ -20,21 +20,21 @@ class CourbeXpImpl
 
     private static function courbeR(int $level): float
     {
-        return 0.8 * pow($level, 3);
+        return abs(0.8 * pow($level, 3));
     }
 
     private static function courbeM(int $level): float
     {
-        return pow($level, 3);
+        return abs(pow($level, 3));
     }
 
     private static function courbeP(int $level): float
     {
-        return 1.2 * pow($level, 3) - 15 * pow($level, 2) + 100 * $level - 140;
+        return abs(1.2 * pow($level, 3) - 15 * pow($level, 2) + 100 * $level - 140);
     }
 
     private static function courbeL(int $level): float
     {
-        return 1.25 * pow($level, 3);
+        return abs(1.25 * pow($level, 3));
     }
 }

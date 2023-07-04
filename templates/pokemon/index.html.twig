@@ -33,7 +33,7 @@
                 <td>{{ pokemon_type.Niveau }}</td>
                 <td>{{ pokemon_type.xpGain }}</td>
                 <td>{{ pokemon_type.xpMax  }}</td>
-                <td><a href="{{ path('app_PokemonInfo', {'id': pokemon_type.idPokemon.id}) }}">show</a></td>
+                <td><a href="{{ path('app_PokemonInfo', {'id': pokemon_type.id}) }}">show</a></td>
             </tr>
         {% else %}
             <tr>
