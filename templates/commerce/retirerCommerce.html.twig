@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Création Commerce
+{% endblock %}
+
+{% block body %}
+{% include 'header.html.twig' %}
+<div class="card" style="width: 80%;margin: auto;margin-top:5%;">
+<div class="card-body">
+
+<h1>Liste de pokémon à retirer </h1>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>Id Vente</th>
+                <th>Nom</th>
+                <th>Evolution</th>
+                <th>Starter</th>
+                <th>TypeCourbeNiveau</th>
+                <th>Niveau</th>
+                <th>Xp gagnés</th>
+                <th>Barre Xp Max</th>
+                <th>Vente</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in range(0, pokemonsUser|length - 1) %}
+            <tr>
+                <td>{{ pokemonsUser[i].id }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.nom }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.evolution ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.starter ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.typeCourbeNiveau }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.Niveau }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.xpGain }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.xpMax  }}</td>
+                <td>
+                
+                <a href="{{ path('app_RetirerVenteId', {'id': pokemonsUser[i].id}) }}">retirer</a>
+                
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+<a href="{{ path('app_AccueilCommerce') }}">retour au marché</a>
+
+</div>
+</div>
+{% endblock %}

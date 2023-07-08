@@ -37,7 +37,6 @@ class Pokemon
     #[ORM\OneToMany(mappedBy: 'idPokemon', targetEntity: PokemonUser::class)]
     private Collection $pokemonUsers;
 
-
     public function __construct()
     {
         $this->pokemonUsers = new ArrayCollection();
@@ -150,5 +149,4 @@ class Pokemon
 
         return $this;
     }
-
 }

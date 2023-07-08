@@ -29,6 +29,7 @@ class EntrainementController extends AbstractController
     public function index(PokemonUserRepository $pokemonUserRepository,
                         PokemonRepository $pokemonRepository): Response
     {
+        $listIsTraining = array();
         $nbPokeUser = count($pokemonUserRepository->findBy(['idUser'=>$this->getUser()]));
         $pkmUser = $pokemonUserRepository->findBy(['idUser'=>$this->getUser()]);
    
@@ -42,7 +43,6 @@ class EntrainementController extends AbstractController
                                 ? date_create($pokeUser->getLastTrainingTime())<$this->currentTime
                                 : true;
         }
-        
         return $this->render('entrainement/entrainement.html.twig', [
             'controller_name' => 'EntrainementController',
             'pokemonsUser' => $pkmUser,

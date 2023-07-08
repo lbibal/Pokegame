@@ -40,12 +40,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $piece = null;
 
-    #[ORM\OneToMany(mappedBy: 'idUser', targetEntity: PokemonUser::class)]
-    private Collection $pokemonUsers;
+    #[ORM\OneToMany(mappedBy: 'idUserAcheteur', targetEntity: Commerce::class)]
+    private Collection $commerces;
 
     public function __construct()
     {
-        $this->pokemonUsers = new ArrayCollection();
+        $this->commerces = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,31 +154,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
     /**
-     * @return Collection<int, PokemonUser>
+     * @return Collection<int, Commerce>
      */
-    public function getPokemonUsers(): Collection
+    public function getCommerces(): Collection
     {
-        return $this->pokemonUsers;
+        return $this->commerces;
     }
 
-    public function addPokemonUser(PokemonUser $pokemonUser): static
+    public function addCommerce(Commerce $commerce): static
     {
-        if (!$this->pokemonUsers->contains($pokemonUser)) {
-            $this->pokemonUsers->add($pokemonUser);
-            $pokemonUser->setIdUser($this);
+        if (!$this->commerces->contains($commerce)) {
+            $this->commerces->add($commerce);
+            $commerce->setIdUserAcheteur($this);
         }
 
         return $this;
     }
 
-    public function removePokemonUser(PokemonUser $pokemonUser): static
+    public function removeCommerce(Commerce $commerce): static
     {
-        if ($this->pokemonUsers->removeElement($pokemonUser)) {
+        if ($this->commerces->removeElement($commerce)) {
             // set the owning side to null (unless already changed)
-            if ($pokemonUser->getIdUser() === $this) {
-                $pokemonUser->setIdUser(null);
+            if ($commerce->getIdUserAcheteur() === $this) {
+                $commerce->setIdUserAcheteur(null);
             }
         }
 

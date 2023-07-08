@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block title %}Fiche Pokemon{% endblock %}
+
+{% block body %}
+{% include 'header.html.twig' %}
+<style>
+.content {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+}
+</style>
+<div class="card" style="width: 80%;margin: auto;margin-top:5%;">
+<div class="card-body">
+{% for message in app.flashes('success') %}
+            <div class="alert alert-primary">
+                {{ message }}
+            </div>
+        {% endfor %}
+    <h1>Fiche général du pokemon à mettre en vente</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pokemon.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ pokemon.nom }}</td>
+            </tr>
+            <tr>
+                <th>Evolution</th>
+                <td>{{ pokemon.evolution ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Starter</th>
+                <td>{{ pokemon.starter ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>TypeCourbeNiveau</th>
+                <td>{{ pokemon.typeCourbeNiveau }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+       {% if isVente %}
+       
+       {{ form_start(PriceForm) }}
+
+      {% form_theme PriceForm 'form_errors.html.twig' %}
+            {{ form_row(PriceForm.Montant) }}
+
+            <button type="submit" class="btn btn-primary mb-2">Mettre en vente</button>
+        {{ form_end(PriceForm) }}
+
+       {% else %}
+       <span>Vente indisponible</span>
+        {% endif %}
+  
+       <a href="{{ path('app_CreationCommerce') }}">retour à la liste</a>
+                
+    
+</div>
+    </div>
+{% endblock %}

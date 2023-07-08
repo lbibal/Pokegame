@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PokemonUserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -31,6 +33,14 @@ class PokemonUser
 
     #[ORM\Column]
     private ?int $niveau = null;
+
+    #[ORM\OneToMany(mappedBy: 'idPokemonUser', targetEntity: Commerce::class)]
+    private Collection $commerces;
+
+    public function __construct()
+    {
+        $this->commerces = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,6 +115,35 @@ class PokemonUser
     public function setNiveau(int $niveau): static
     {
         $this->niveau = $niveau;
+
+        return $this;
+    }
+    /**
+     * @return Collection<int, Commerce>
+     */
+    public function getCommerces(): Collection
+    {
+        return $this->commerces;
+    }
+
+    public function addCommerce(Commerce $commerce): static
+    {
+        if (!$this->commerces->contains($commerce)) {
+            $this->commerces->add($commerce);
+            $commerce->setIdPokemonUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommerce(Commerce $commerce): static
+    {
+        if ($this->commerces->removeElement($commerce)) {
+            // set the owning side to null (unless already changed)
+            if ($commerce->getIdPokemonUser() === $this) {
+                $commerce->setIdPokemonUser(null);
+            }
+        }
 
         return $this;
     }

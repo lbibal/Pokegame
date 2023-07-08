@@ -28,21 +28,25 @@
                         <a class="nav-link" href="{{ path('app_entrainement') }}">Entrainement</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Commerce</a>
+                        <a class="nav-link" href=" {{ path('app_AccueilCommerce') }}">Commerce</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Capture</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Ajouter un pokemon</a>
                     </li>
                 {% endif %}
             </ul>
         </div>
         <div class="ml-auto" style="padding-right:2%">
+            <ul class="navbar-nav">
             {% if app.user %}
-                <a class="nav-link" href="{{ path('logout') }}">Déconnexion</a>
+                <li class="nav-item">
+                    <span class="nav-link">{{ app.user.piece }} Pièce(s)</span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('logout') }}">Déconnexion</a>
+                </li>
             {% endif %}
+            </ul>
         </div>
     </nav>
 {% endblock %}

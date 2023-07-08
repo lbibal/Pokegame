@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+Accueil Commerce
+{% endblock %}
+
+{% block body %}
+{% include 'header.html.twig' %}
+<div class="card" style="width: 80%;margin: auto;margin-top:5%;">
+<div class="card-body">
+{% for message in app.flashes('success') %}
+            <div class="alert alert-primary">
+                {{ message }}
+            </div>
+        {% endfor %}
+{% for message in app.flashes('fail') %}
+            <div class="alert alert-warning">
+                {{ message }}
+            </div>
+{% endfor %}
+<h1>Bienvenue au marché des Pokémons !</h1>
+<a href="{{ path('app_CreationCommerce') }}">créer une vente</a>
+<a href="{{ path('app_RetirerCommerce') }}">retirer une vente</a>
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>Id Vente</th>
+                <th>Nom</th>
+                <th>Evolution</th>
+                <th>Starter</th>
+                <th>TypeCourbeNiveau</th>
+                <th>Niveau</th>
+                <th>Xp gagnés</th>
+                <th>Barre Xp Max</th>
+                <th>Montant</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for i in range(0, pokemonsUser|length - 1) %}
+            <tr>
+                <td>{{ pokemonsUser[i].id }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.nom }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.evolution ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.starter ? 'Yes' : 'No' }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.typeCourbeNiveau }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.Niveau }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.xpGain }}</td>
+                <td>{{ pokemonsUser[i].idPokemonUser.xpMax  }}</td>
+                <td>{{ pokemonsUser[i].price }}</td>
+                {% if not isOwnPokemon[i] %}
+                <td><a href="{{ path('app_achatCommerce', {'id':pokemonsUser[i].id}) }}"> Achat </a></td>
+                {% else %}
+                <td> <span>déjà en vente</span> </td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+</div>
+{% endblock %}
