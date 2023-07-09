@@ -37,28 +37,30 @@ Accueil Commerce
             </tr>
         </thead>
         <tbody>
-        {% for i in range(0, pokemonsUser|length - 1) %}
-            <tr>
-                <td>{{ pokemonsUser[i].id }}</td>
-                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.nom }}</td>
-                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.evolution ? 'Yes' : 'No' }}</td>
-                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.starter ? 'Yes' : 'No' }}</td>
-                <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.typeCourbeNiveau }}</td>
-                <td>{{ pokemonsUser[i].idPokemonUser.Niveau }}</td>
-                <td>{{ pokemonsUser[i].idPokemonUser.xpGain }}</td>
-                <td>{{ pokemonsUser[i].idPokemonUser.xpMax  }}</td>
-                <td>{{ pokemonsUser[i].price }}</td>
-                {% if not isOwnPokemon[i] %}
-                <td><a href="{{ path('app_achatCommerce', {'id':pokemonsUser[i].id}) }}"> Achat </a></td>
-                {% else %}
-                <td> <span>déjà en vente</span> </td>
-                {% endif %}
-            </tr>
+        {% if pokemonsUser is not empty %}
+            {% for i in range(0, pokemonsUser|length - 1) %}
+                <tr>
+                    <td>{{ pokemonsUser[i].id }}</td>
+                    <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.nom }}</td>
+                    <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.evolution ? 'Yes' : 'No' }}</td>
+                    <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.starter ? 'Yes' : 'No' }}</td>
+                    <td>{{ pokemonsUser[i].idPokemonUser.idPokemon.typeCourbeNiveau }}</td>
+                    <td>{{ pokemonsUser[i].idPokemonUser.Niveau }}</td>
+                    <td>{{ pokemonsUser[i].idPokemonUser.xpGain }}</td>
+                    <td>{{ pokemonsUser[i].idPokemonUser.xpMax  }}</td>
+                    <td>{{ pokemonsUser[i].price }}</td>
+                    {% if not isOwnPokemon[i] %}
+                    <td><a href="{{ path('app_achatCommerce', {'id':pokemonsUser[i].id}) }}"> Achat </a></td>
+                    {% else %}
+                    <td> <span>déjà en vente</span> </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
         {% else %}
             <tr>
                 <td colspan="6">no records found</td>
             </tr>
-        {% endfor %}
+        {% endif %}
         </tbody>
     </table>
 </div>

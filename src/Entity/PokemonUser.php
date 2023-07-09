@@ -37,6 +37,9 @@ class PokemonUser
     #[ORM\OneToMany(mappedBy: 'idPokemonUser', targetEntity: Commerce::class)]
     private Collection $commerces;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $LastCaptureTime = null;
+
     public function __construct()
     {
         $this->commerces = new ArrayCollection();
@@ -144,6 +147,18 @@ class PokemonUser
                 $commerce->setIdPokemonUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLastCaptureTime(): ?string
+    {
+        return $this->LastCaptureTime;
+    }
+
+    public function setLastCaptureTime(?string $LastCaptureTime): static
+    {
+        $this->LastCaptureTime = $LastCaptureTime;
 
         return $this;
     }

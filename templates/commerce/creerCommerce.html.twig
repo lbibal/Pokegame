@@ -25,31 +25,33 @@ Création Commerce
             </tr>
         </thead>
         <tbody>
-        {% for i in range(0, pokemonsUser|length - 1) %}
-            <tr>
-                <td>{{ pokemonsUser[i].id }}</td>
-                <td>{{ pokemonsUser[i].idPokemon.nom }}</td>
-                <td>{{ pokemonsUser[i].idPokemon.evolution ? 'Yes' : 'No' }}</td>
-                <td>{{ pokemonsUser[i].idPokemon.starter ? 'Yes' : 'No' }}</td>
-                <td>{{ pokemonsUser[i].idPokemon.typeCourbeNiveau }}</td>
-                <td>{{ pokemonsUser[i].Niveau }}</td>
-                <td>{{ pokemonsUser[i].xpGain }}</td>
-                <td>{{ pokemonsUser[i].xpMax  }}</td>
-                <td>
-                {% if isVente[i] %}
-                <a href="{{ path('app_creationVente', {'id': pokemonsUser[i].id}) }}">mettre en vente</a>
-                {% else %}
-                
-                <span> déjà en vente </span>
-                
-                {% endif %}
-                </td>
-            </tr>
+        {% if pokemonsUser is not empty %}
+            {% for i in range(0, pokemonsUser|length - 1) %}
+                <tr>
+                    <td>{{ pokemonsUser[i].id }}</td>
+                    <td>{{ pokemonsUser[i].idPokemon.nom }}</td>
+                    <td>{{ pokemonsUser[i].idPokemon.evolution ? 'Yes' : 'No' }}</td>
+                    <td>{{ pokemonsUser[i].idPokemon.starter ? 'Yes' : 'No' }}</td>
+                    <td>{{ pokemonsUser[i].idPokemon.typeCourbeNiveau }}</td>
+                    <td>{{ pokemonsUser[i].Niveau }}</td>
+                    <td>{{ pokemonsUser[i].xpGain }}</td>
+                    <td>{{ pokemonsUser[i].xpMax  }}</td>
+                    <td>
+                    {% if isVente[i] %}
+                    <a href="{{ path('app_creationVente', {'id': pokemonsUser[i].id}) }}">mettre en vente</a>
+                    {% else %}
+                    
+                    <span> déjà en vente </span>
+                    
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
         {% else %}
             <tr>
                 <td colspan="6">no records found</td>
             </tr>
-        {% endfor %}
+        {% endif %}
         </tbody>
     </table>
 

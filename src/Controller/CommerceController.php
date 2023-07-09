@@ -27,6 +27,7 @@ class CommerceController extends AbstractController
                             PokemonRepository $pokemonRepository): Response
     {
         $pokemonCommerce = $commerceRepository->findBy(['idUserAcheteur'=>null]);
+        $listIsPokemonUser = array();
         for($i=0;$i<count($pokemonCommerce);$i++){
             $completUserPokemon = $pokemonUserRepository->findBy(['id'=>$pokemonCommerce[$i]->getIdPokemonUser()])[0];
             $pokemonInfo = $pokemonRepository->findBy(['id'=>$completUserPokemon->getIdPokemon()])[0];
@@ -34,7 +35,7 @@ class CommerceController extends AbstractController
             $pokemonCommerce[$i]->setIdPokemonUser($completUserPokemon);
             $listIsPokemonUser[] = ($completUserPokemon->getIdUser()->getId() == $this->getUser()->getId());                                  
         }
-
+        //dd($pokemonCommerce);
         return $this->render('commerce/commerce.html.twig', [
             'pokemonsUser' => $pokemonCommerce,
             'isOwnPokemon' => $listIsPokemonUser,
@@ -49,8 +50,7 @@ class CommerceController extends AbstractController
     {
         $nbPokeUser = count($pokemonUserRepository->findBy(['idUser'=>$this->getUser()]));
         $pkmUser = $pokemonUserRepository->findBy(['idUser'=>$this->getUser()]);
-        //dd($pkmUser);
-        //dd($commerceRepository->findBy(['idPokemonUser'=>$pkmUser[2]]));
+        $listIsVente = array();
 //Y-M-D
         for($i=0;$i<$nbPokeUser;$i++){
             $pokeUser = $pkmUser[$i];

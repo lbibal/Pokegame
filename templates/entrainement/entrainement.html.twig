@@ -37,7 +37,6 @@
                     {% if isTraining[i] %}
                     <a href="{{ path('app_fichePokemons', {'id': pokemonsUser[i].id}) }}">now</a>
                     {% else %}
-                    <span>aze</span>
                     <span> {{ pokemonsUser[i].LastTrainingTime|slice(11)}} </span>
                     
                     {% endif %}

@@ -3,6 +3,8 @@
 namespace App\DataFixtures;
 
 use App\Entity\Elementary;
+use App\Entity\Lieu;
+use App\Entity\LieuElementary;
 use App\Entity\Pokemon;
 use App\Entity\PokemonUser;
 use App\Entity\User;
@@ -27,7 +29,7 @@ class PokemonFixtures extends Fixture
         $user->setRoles(["ROLES_USER"]);
         $user->setEmail("aze@gmail.com");
         $user->setPassword($this->userPasswordHasher->hashPassword($user,"password"));
-        $user->setPiece(0);
+        $user->setPiece(50);
         $manager->persist($user);
 
         //create elementary
@@ -99,6 +101,38 @@ class PokemonFixtures extends Fixture
         $pokemonUser->setNiveau(1);
         $manager->persist($pokemonUser);
         
+        //lieu 
+        $listLieu = array("Montagne","Prairie","Ville","Foret","Plage");
+        for($i=0;$i<count($listLieu);$i++){
+            $lieu = new Lieu();
+            $lieu->setNom($listLieu[$i]);
+            $listLieuObject[] = $lieu;
+            $manager->persist($lieu);
+        }
+        // lieu and elementary
+        
+        $listLieuElem = array(0=>array($listElemObject[0],$listElemObject[2],$listElemObject[6],
+                                                        $listElemObject[8],$listElemObject[12]),
+                            1=>array($listElemObject[5],$listElemObject[8],$listElemObject[9],
+                                                      $listElemObject[13],$listElemObject[15],$listElemObject[16]),
+                            2=>array($listElemObject[1],$listElemObject[4],$listElemObject[8],
+                                                      $listElemObject[11]),
+                            3=>array($listElemObject[7],$listElemObject[8],$listElemObject[14],
+                                                      $listElemObject[15]),
+                            4=>array($listElemObject[2],$listElemObject[3],$listElemObject[8],
+                                                      $listElemObject[10])
+                        );
+
+        foreach($listLieuElem as $lieux => $arrElem){
+            
+            foreach($arrElem as &$elementary){
+                $lieuElementary = new LieuElementary();
+                $lieuElementary->setIdLieu($listLieuObject[$lieux]);
+                $lieuElementary->setIdElementary($elementary);
+                $manager->persist($lieuElementary);
+            }
+        }
+        //
         $manager->flush();
     }
 }

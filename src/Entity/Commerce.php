@@ -22,10 +22,10 @@ class Commerce
     private ?string $dateAcheter = null;
 
     #[ORM\ManyToOne(inversedBy: 'commerces')]
-    private ?pokemonUser $idPokemonUser = null;
+    private ?PokemonUser $idPokemonUser = null;
 
     #[ORM\ManyToOne(inversedBy: 'commerces')]
-    private ?user $idUserAcheteur = null;
+    private ?User $idUserAcheteur = null;
 
     public function getId(): ?int
     {
@@ -56,24 +56,24 @@ class Commerce
         return $this;
     }
 
-    public function getIdPokemonUser(): ?pokemonUser
+    public function getIdPokemonUser(): ?PokemonUser
     {
         return $this->idPokemonUser;
     }
 
-    public function setIdPokemonUser(?pokemonUser $idPokemonUser): static
+    public function setIdPokemonUser(?PokemonUser $idPokemonUser): static
     {
         $this->idPokemonUser = $idPokemonUser;
 
         return $this;
     }
 
-    public function getIdUserAcheteur(): ?user
+    public function getIdUserAcheteur(): ?User
     {
         return $this->idUserAcheteur;
     }
 
-    public function setIdUserAcheteur(?user $idUserAcheteur): static
+    public function setIdUserAcheteur(?User $idUserAcheteur): static
     {
         $this->idUserAcheteur = $idUserAcheteur;
 

@@ -24,10 +24,14 @@ class Elementary
     #[ORM\OneToMany(mappedBy: 'type2', targetEntity: Pokemon::class)]
     private Collection $pokemon2;
 
+    #[ORM\OneToMany(mappedBy: 'idElementary', targetEntity: LieuElementary::class)]
+    private Collection $lieuElementaries;
+
     public function __construct()
     {
         $this->pokemon = new ArrayCollection();
         $this->pokemon2 = new ArrayCollection();
+        $this->lieuElementaries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -101,6 +105,36 @@ class Elementary
             // set the owning side to null (unless already changed)
             if ($pokemon2->getType2() === $this) {
                 $pokemon2->setType2(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, LieuElementary>
+     */
+    public function getLieuElementaries(): Collection
+    {
+        return $this->lieuElementaries;
+    }
+
+    public function addLieuElementary(LieuElementary $lieuElementary): static
+    {
+        if (!$this->lieuElementaries->contains($lieuElementary)) {
+            $this->lieuElementaries->add($lieuElementary);
+            $lieuElementary->setIdElementary($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLieuElementary(LieuElementary $lieuElementary): static
+    {
+        if ($this->lieuElementaries->removeElement($lieuElementary)) {
+            // set the owning side to null (unless already changed)
+            if ($lieuElementary->getIdElementary() === $this) {
+                $lieuElementary->setIdElementary(null);
             }
         }
 
