@@ -38,7 +38,34 @@ class LieuElementaryRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    public function findPokemonByLieuAndType2($idLieu){
+        return $this->createQueryBuilder('le')
+        ->select('distinct p1')
+        ->from('App\Entity\Elementary','e')
+        ->from('App\Entity\Pokemon','p1')
+        ->innerJoin('e.lieuElementaries','a')
+        ->innerJoin('e.pokemon2','p')
+        ->where('le.idLieu=:lieu')
+        ->andWhere('a.idElementary = le.idElementary')
+        ->andWhere('p.type2 = p1.type2')
+        ->setParameter('lieu',$idLieu)
+        ->getQuery()
+        ->getResult();
+    }
+    public function findPokemonByLieuAndType1($idLieu){
+        return $this->createQueryBuilder('le')
+            ->select('distinct p1')
+            ->from('App\Entity\Elementary','e')
+            ->from('App\Entity\Pokemon','p1')
+            ->innerJoin('e.lieuElementaries','a')
+            ->innerJoin('e.pokemon','p')
+            ->where('le.idLieu=:lieu')
+            ->andWhere('a.idElementary = le.idElementary')
+            ->andWhere('p.type1 = p1.type1')
+            ->setParameter('lieu',$idLieu)
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return LieuElementary[] Returns an array of LieuElementary objects
 //     */

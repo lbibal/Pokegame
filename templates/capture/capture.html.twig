@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Capture Pokemon{% endblock %}
+
+{% block body %}
+{% include 'header.html.twig' %}
+<div class="card" style="width: 80%;margin: auto;margin-top:5%;">
+<div class="card-body">
+{% for message in app.flashes('success') %}
+            <div class="alert alert-primary">
+                {{ message }}
+            </div>
+        {% endfor %}
+<h1>Choix du pokemon !</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Evolution</th>
+                <th>Starter</th>
+                <th>TypeCourbeNiveau</th>
+                <th>Niveau</th>
+                <th>Xp gagnés</th>
+                <th>Barre Xp Max</th>
+                <th>Dernier entrainement</th>
+                <th>Derniere capture</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if pokemonsUser is not empty %}
+            {% for i in range(0, pokemonsUser|length - 1) %}
+                <tr>
+                    <td>{{ pokemonsUser[i].id }}</td>
+                    <td>{{ pokemonsUser[i].idPokemon.nom }}</td>
+                    <td>{{ pokemonsUser[i].idPokemon.evolution ? 'Yes' : 'No' }}</td>
+                    <td>{{ pokemonsUser[i].idPokemon.starter ? 'Yes' : 'No' }}</td>
+                    <td>{{ pokemonsUser[i].idPokemon.typeCourbeNiveau }}</td>
+                    <td>{{ pokemonsUser[i].Niveau }}</td>
+                    <td>{{ pokemonsUser[i].xpGain }}</td>
+                    <td>{{ pokemonsUser[i].xpMax  }}</td>
+                    <td>{{ pokemonsUser[i].LastTrainingTime|slice(11)}}</td>
+                    <td>{{ pokemonsUser[i].LastCaptureTime|slice(11) }}</td>
+                    <td>
+                    {% if isTraining[i] and isCapture[i] %}
+                        <a href="{{ path('app_PokemonCapture',{'id':pokemonsUser[i].id}) }}">pick</a>
+                    {% else %}
+                        <span>Pas disponible</span>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+{% endblock %}
