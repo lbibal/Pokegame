@@ -186,12 +186,4 @@ class CommerceController extends AbstractController
         $this->addFlash('success','Achat réussi !');
         return $this->redirectToRoute('app_AccueilCommerce');
     }
-    #[Route('/creation/pokemon/{id}/vente', name: 'app_Vente')]
-    #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas les droits suffisants')]
-    public function vente(CommerceRepository $commerceRepository,
-                          PokemonUser $pokemonUser) : Response
-    {
-
-        dd("12");
-    }
 }

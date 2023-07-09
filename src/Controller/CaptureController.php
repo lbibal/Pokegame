@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\PokemonUser;
 use App\Form\CaptureFormType;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\LieuElementaryRepository;
 use App\Repository\LieuRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +27,7 @@ class CaptureController extends AbstractController
     }
 
     #[Route('/', name: 'app_AccueilCapture')]
+    #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas les droits suffisants')]
     public function index(PokemonUserRepository $pokemonUserRepository,
                         PokemonRepository $pokemonRepository): Response
     {
@@ -34,7 +36,7 @@ class CaptureController extends AbstractController
         $nbPokeUser = count($pokemonUserRepository->findBy(['idUser'=>$this->getUser()]));
         $pkmUser = $pokemonUserRepository->findBy(['idUser'=>$this->getUser()]);
    
-//Y-M-D
+        //Y-M-D
         for($i=0;$i<$nbPokeUser;$i++){
             $pokeUser = $pkmUser[$i];
             $pokemonId = $pokeUser->getIdPokemon();
@@ -47,7 +49,6 @@ class CaptureController extends AbstractController
                                             ? date_create($pokeUser->getLastCaptureTime())<$this->currentTime
                                             : true;
         }
-        //dd($this->currentTime);
         return $this->render('capture/capture.html.twig', [
             'controller_name' => 'CaptureController',
             'pokemonsUser' => $pkmUser,
@@ -56,6 +57,7 @@ class CaptureController extends AbstractController
         ]);
     }
     #[Route('/{id}/lieu', name: 'app_PokemonCapture')]
+    #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas les droits suffisants')]
     public function capture(PokemonUser $pokemonUser,
                             Request $request,
                             LieuElementaryRepository $lieuElementaryRepository,

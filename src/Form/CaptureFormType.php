@@ -22,6 +22,7 @@ class CaptureFormType extends AbstractType
                     'Forêt' => 'foret',
                     'Plage' => 'plage',
                 ],
+                'attr' => ['class'=>'form-select'],
                 'placeholder' => 'Choisissez un lieu',
                 'required' => true,
             ]);
