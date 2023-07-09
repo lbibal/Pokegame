@@ -115,23 +115,43 @@ class CommerceController extends AbstractController
     {
 
         $pokemonCommerce = $commerceRepository->findBy(['idUserAcheteur'=>null]);
-        for($i=0;$i<count($pokemonCommerce);$i++){
-            $completUserPokemon = $pokemonUserRepository->findBy(['id'=>$pokemonCommerce[$i]->getIdPokemonUser()])[0];
-            $pokemonInfo = $pokemonRepository->findBy(['id'=>$completUserPokemon->getIdPokemon()])[0];
-            $completUserPokemon->setIdPokemon($pokemonInfo);
-            $pokemonCommerce[$i]->setIdPokemonUser($completUserPokemon);
-        }
 
+        $completUserPokemon = array();
+        $aze = array();
+        for($i=0;$i<count($pokemonCommerce);$i++){
+            $completUserPokemon[] = $pokemonUserRepository->findBy(['id'=>$pokemonCommerce[$i]->getIdPokemonUser(),'idUser'=>$this->getUser()]);         
+            
+            
+            if(empty($completUserPokemon[0])){
+                continue;
+            }else{
+                $pokemonInfo = $pokemonRepository->findBy(['id'=>$completUserPokemon[0][0]->getIdPokemon()])[0];
+            
+                $completUserPokemon[0][0]->setIdPokemon($pokemonInfo);
+                $pokemonCommerce[$i]->setIdPokemonUser($completUserPokemon[0][0]);
+                $aze[]= $pokemonCommerce[$i];
+            }
+        }
+      
         return $this->render('commerce/retirerCommerce.html.twig',[
-            'pokemonsUser' => $pokemonCommerce,
+            'pokemonsUser' => $aze,
             ]);
     }
+
     #[Route('/retirer/{id}', name: 'app_RetirerVenteId')]
     #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas les droits suffisants')]
     public function retirerVente(Commerce $commerce,
                                 CommerceRepository $commerceRepository,
+                                PokemonUserRepository $pokemonUserRepository,
+                                UserRepository $userRepository,
                                 EntityManagerInterface $em): Response
     {
+        $pokemonUser = $pokemonUserRepository->findBy(['id'=>$commerce->getIdPokemonUser()])[0];
+        
+        $isCurrentUser = $pokemonUser->getIdUser()->getId() == $this->getUser()->getId();
+        if(!$isCurrentUser){
+            throw new AccessDeniedException();
+        }
         $commerceRepository->remove($commerce);
         $em->flush();
         $this->addFlash('success', 'Votre pokémon a bien été retiré !');
@@ -186,4 +206,6 @@ class CommerceController extends AbstractController
         $this->addFlash('success','Achat réussi !');
         return $this->redirectToRoute('app_AccueilCommerce');
     }
-}
+    /*#[Route('/achat/{id}', name: 'app_HistoricCommerce')]
+    #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas les droits suffisants')]
+*/}
