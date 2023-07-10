@@ -16,3 +16,6 @@ pour générer les datas nécessaire : ``` php bin/console doctrine:fixtures:loa
 pour lancer l'application : ``` symfony server:start ``` 
 
 pour fermer le serveur: ``` symfony server:stop ``` 
+
+Dans l'application il y a deux comptes : compte par défaut : username : Lucas; mot de passe : password;
+et username : pascal; mot de passe : azerty;
