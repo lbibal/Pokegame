@@ -9,9 +9,11 @@ Suivez les instructions ci-dessous :
 
 pour mettre à jour les dépendances : ```composer update```
 
-pour générer les tables dans la base de données : ```php bin/console doctrine:schema:update --force```
+Si les tables ne sont pas générés  :
 
-pour générer les datas nécessaire : ``` php bin/console doctrine:fixtures:load ```
+- pour générer les tables dans la base de données : ```php bin/console doctrine:schema:update --force```
+
+- pour générer les datas nécessaire : ``` php bin/console doctrine:fixtures:load ```
 
 pour lancer l'application : ``` symfony server:start ``` 
 
