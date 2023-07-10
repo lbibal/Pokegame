@@ -114,24 +114,24 @@ class CommerceController extends AbstractController
     {
 
         $pokemonCommerce = $commerceRepository->findBy(['idUserAcheteur'=>null]);
-
+        
         $completUserPokemon = array();
         $aze = array();
         for($i=0;$i<count($pokemonCommerce);$i++){
             $completUserPokemon[] = $pokemonUserRepository->findBy(['id'=>$pokemonCommerce[$i]->getIdPokemonUser(),'idUser'=>$this->getUser()]);         
             
             
-            if(empty($completUserPokemon[0])){
+            if(empty($completUserPokemon[$i])){
                 continue;
             }else{
-                $pokemonInfo = $pokemonRepository->findBy(['id'=>$completUserPokemon[0][0]->getIdPokemon()])[0];
-            
-                $completUserPokemon[0][0]->setIdPokemon($pokemonInfo);
-                $pokemonCommerce[$i]->setIdPokemonUser($completUserPokemon[0][0]);
+                $pokemonInfo = $pokemonRepository->findBy(['id'=>$completUserPokemon[$i][0]->getIdPokemon()])[0];
+                
+                $completUserPokemon[$i][0]->setIdPokemon($pokemonInfo);
+                $pokemonCommerce[$i]->setIdPokemonUser($completUserPokemon[$i][0]);
                 $aze[]= $pokemonCommerce[$i];
             }
         }
-      
+       
         return $this->render('commerce/retirerCommerce.html.twig',[
             'pokemonsUser' => $aze,
             ]);
