@@ -35,7 +35,6 @@ class CommerceController extends AbstractController
             $pokemonCommerce[$i]->setIdPokemonUser($completUserPokemon);
             $listIsPokemonUser[] = ($completUserPokemon->getIdUser()->getId() == $this->getUser()->getId());                                  
         }
-        //dd($pokemonCommerce);
         return $this->render('commerce/commerce.html.twig', [
             'pokemonsUser' => $pokemonCommerce,
             'isOwnPokemon' => $listIsPokemonUser,
@@ -206,6 +205,24 @@ class CommerceController extends AbstractController
         $this->addFlash('success','Achat réussi !');
         return $this->redirectToRoute('app_AccueilCommerce');
     }
-    /*#[Route('/achat/{id}', name: 'app_HistoricCommerce')]
+    #[Route('/historic', name: 'app_HistoricCommerce')]
     #[IsGranted('ROLE_USER', message: 'Vous n\'avez pas les droits suffisants')]
-*/}
+    public function historic(CommerceRepository $commerceRepository,
+                            PokemonUserRepository $pokemonUserRepository,
+                            PokemonRepository $pokemonRepository): Response
+    {
+        $historicAchat = $commerceRepository->findBy(['idUserAcheteur'=>$this->getUser()]);
+        $listHistoric = array();
+        for($i=0;$i<count($historicAchat);$i++){
+            $completUserPokemon = $pokemonUserRepository->findBy(['id'=>$historicAchat[$i]->getIdPokemonUser()])[0];
+            $pokemonInfo = $pokemonRepository->findBy(['id'=>$completUserPokemon->getIdPokemon()])[0];
+            $completUserPokemon->setIdPokemon($pokemonInfo);
+            $historicAchat[$i]->setIdPokemonUser($completUserPokemon);
+            $listHistoric[] = $historicAchat[$i]->getDateAcheter();                                
+        }
+        return $this->render('commerce/historic.html.twig', [
+            'pokemonsUser' => $historicAchat,
+            'historicDate' => $listHistoric,
+        ]);
+    }
+}

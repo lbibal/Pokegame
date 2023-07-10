@@ -17,6 +17,7 @@
 {% form_theme CaptureForm 'form_errors.html.twig' %}
 {{ form_row(CaptureForm.lieu) }}
 {% if isTraining and isCapture %}
+<br>
  <button type="submit" class="btn btn-primary mb-2">Capture</button>
  {% else %}
  <span>Indisponible</span>

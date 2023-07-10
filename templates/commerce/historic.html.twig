@@ -1,28 +1,15 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-Accueil Commerce
+Historic Commerce
 {% endblock %}
 
 {% block body %}
 {% include 'header.html.twig' %}
 <div class="card" style="width: 80%;margin: auto;margin-top:5%;">
 <div class="card-body">
-{% for message in app.flashes('success') %}
-            <div class="alert alert-primary">
-                {{ message }}
-            </div>
-        {% endfor %}
-{% for message in app.flashes('fail') %}
-            <div class="alert alert-warning">
-                {{ message }}
-            </div>
-{% endfor %}
-<h1>Bienvenue au marché des Pokémons !</h1>
-<div style="display: flex; gap: 20px;">
-    <a href="{{ path('app_CreationCommerce') }}" class="btn btn-secondary">créer une vente</a>
-    <a href="{{ path('app_RetirerCommerce') }}" class="btn btn-secondary">retirer une vente</a>
-    <a href="{{ path('app_HistoricCommerce') }}" class="btn btn-secondary">voir historique achat</a>
-</div>
+
+<h1>Historique des achats </h1>
+
 <table class="table">
         <thead>
             <tr>
@@ -34,8 +21,7 @@ Accueil Commerce
                 <th>Niveau</th>
                 <th>Xp gagnés</th>
                 <th>Barre Xp Max</th>
-                <th>Montant</th>
-                <th>Action</th>
+                <th>Date Achat</th>
             </tr>
         </thead>
         <tbody>
@@ -50,14 +36,13 @@ Accueil Commerce
                     <td>{{ pokemonsUser[i].idPokemonUser.Niveau }}</td>
                     <td>{{ pokemonsUser[i].idPokemonUser.xpGain }}</td>
                     <td>{{ pokemonsUser[i].idPokemonUser.xpMax  }}</td>
-                    <td>{{ pokemonsUser[i].price }}</td>
-                    {% if not isOwnPokemon[i] %}
-                    <td><a href="{{ path('app_achatCommerce', {'id':pokemonsUser[i].id}) }}"> Achat </a></td>
-                    {% else %}
-                    <td> <span>déjà en vente</span> </td>
-                    {% endif %}
+                    <td>
+                    
+                    {{ historicDate[i] }}
+                    
+                    </td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
         {% else %}
             <tr>
                 <td colspan="6">no records found</td>
@@ -65,6 +50,9 @@ Accueil Commerce
         {% endif %}
         </tbody>
     </table>
+
+<a href="{{ path('app_AccueilCommerce') }}">retour au marché</a>
+
 </div>
 </div>
 {% endblock %}
